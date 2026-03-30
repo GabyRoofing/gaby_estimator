@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gaby Roofing - Free Estimate</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Barlow', sans-serif; background: #f0f2f8; color: #111; min-height: 100vh; }
+.hdr { background: #111a3e; border-bottom: 4px solid #8b1a1a; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.hdr-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: #fff; }
+.hdr-logo span { color: #cc2222; }
+.hdr-sub { font-size: 9px; color: #8899bb; letter-spacing: 3px; text-transform: uppercase; margin-top: 2px; }
+.hdr-phone { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; text-decoration: none; }
+.hero { background: #111a3e; text-align: center; padding: 14px 16px 18px; border-bottom: 2px solid #1e2d5a; }
+.hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px,6vw,36px); letter-spacing: 2px; color: #fff; line-height: 1.1; }
+.hero h1 span { color: #cc2222; }
+.hero p { color: #99aacc; font-size: 12px; margin-top: 6px; }
+.wrap { max-width: 600px; margin: 0 auto; padding: 14px 14px 50px; }
+.prog { display: flex; gap: 5px; margin-bottom: 12px; }
+.pseg { flex: 1; height: 5px; border-radius: 3px; background: #ccd; transition: background 0.3s; }
+.pseg.on { background: #cc2222; }
+.card { background: #fff; border: 2px solid #c8d0e8; border-radius: 14px; padding: clamp(14px,4vw,24px); box-shadow: 0 4px 20px rgba(26,36,86,0.1); }
+.step { display: none; }
+.step.active { display: block; }
+.slbl { font-size: 10px; color: #cc2222; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
+.stitle { font-family: 'Bebas Neue', sans-serif; font-size: clamp(20px,5vw,26px); letter-spacing: 1px; color: #111; margin-bottom: 4px; }
+.shint { color: #555; font-size: 13px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #dde2ee; line-height: 1.5; }
+.tgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tbtn { border: 2px solid #c8d0e8; border-radius: 12px; padding: 16px 8px; text-align: center; cursor: pointer; background: #fff; color: #111; width: 100%; transition: all 0.2s; }
+.tbtn.sel { border-color: #cc2222; background: rgba(204,34,34,0.05); }
+.tbtn-icon { font-size: 30px; margin-bottom: 6px; }
+.tbtn-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; }
+.tbtn-sub { font-size: 11px; color: #666; margin-top: 3px; }
+.slist { display: flex; flex-direction: column; gap: 8px; }
+.sbtn { border: 2px solid #c8d0e8; border-radius: 10px; padding: 11px 14px; cursor: pointer; background: #fff; color: #111; text-align: left; width: 100%; transition: all 0.2s; }
+.sbtn.sel { border-color: #cc2222; background: rgba(204,34,34,0.05); }
+.sbtn-top { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+.sbtn-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; }
+.sbtn-badge { font-size: 9px; background: #111a3e; color: #fff; padding: 2px 7px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.sbtn-desc { font-size: 12px; color: #555; line-height: 1.4; }
+.addr-input { width: 100%; background: #fff; border: 2px solid #c8d0e8; border-radius: 8px; padding: 13px 14px; color: #111; font-size: 15px; font-family: 'Barlow', sans-serif; outline: none; box-sizing: border-box; transition: border-color 0.2s; margin-bottom: 12px; }
+.addr-input:focus { border-color: #111a3e; }
+.info-box { border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: none; }
+.info-loading { background: #f4f6fb; border: 2px solid #c8d0e8; text-align: center; }
+.info-found { background: #f0f4ff; border: 2px solid #111a3e; }
+.info-lbl { font-size: 10px; color: #111a3e; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+.info-sqft { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #111; }
+.prop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.prop-item { background: #f4f6fb; border-radius: 8px; padding: 8px 10px; }
+.prop-lbl { font-size: 9px; color: #111a3e; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+.prop-val { font-family: 'Bebas Neue', sans-serif; font-size: 18px; }
+.roof-warn { background: #fff0f0; border: 2px solid #cc2222; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+.roof-warn-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: #cc2222; }
+.edit-btn { margin-top: 8px; background: transparent; border: 1px solid #c8d0e8; border-radius: 6px; padding: 5px 12px; font-size: 11px; color: #555; cursor: pointer; font-family: 'Barlow', sans-serif; }
+.err-box { background: #fff8f0; border: 2px solid #f0c080; border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; display: none; }
+.man-wrap { border-top: 1px solid #dde2ee; padding-top: 12px; margin-top: 8px; display: none; }
+.man-lbl { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+.man-row { display: flex; gap: 8px; }
+.man-input { flex: 1; background: #fff; border: 2px solid #c8d0e8; border-radius: 8px; padding: 10px 14px; color: #111; font-size: 15px; font-family: 'Barlow', sans-serif; outline: none; }
+.apply-btn { padding: 10px 16px; background: #111a3e; border: none; border-radius: 8px; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 17px; cursor: pointer; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pill { padding: 5px 12px; border-radius: 20px; border: 1px solid #c8d0e8; background: #fff; color: #333; font-size: 12px; cursor: pointer; font-family: 'Barlow', sans-serif; }
+.pill:hover { border-color: #111a3e; background: #111a3e; color: #fff; }
+.est-box { background: #f0f4ff; border: 2px solid #111a3e; border-radius: 10px; padding: 14px 16px; margin-top: 12px; display: none; }
+.est-box.show { display: block; }
+.est-lbl { font-size: 10px; color: #111a3e; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
+.est-price { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: #111; }
+.est-det { font-size: 12px; color: #555; margin-top: 3px; }
+.fields { display: flex; flex-direction: column; gap: 10px; }
+.flbl { font-size: 11px; color: #444; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+.finput { width: 100%; background: #fff; border: 2px solid #c8d0e8; border-radius: 8px; padding: 11px 14px; color: #111; font-size: 15px; font-family: 'Barlow', sans-serif; outline: none; }
+.finput:focus { border-color: #cc2222; }
+.nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; gap: 10px; padding-top: 12px; border-top: 1px solid #dde2ee; }
+.bk { padding: 12px 18px; background: transparent; border: 2px solid #c8d0e8; border-radius: 8px; color: #555; font-size: 14px; cursor: pointer; font-weight: 600; font-family: 'Barlow', sans-serif; }
+.nx { flex: 1; max-width: 240px; padding: 13px 20px; background: #8b1a1a; border: none; border-radius: 8px; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; cursor: pointer; }
+.nx:hover { background: #cc2222; }
+.nx:disabled { background: #ccc; color: #888; cursor: not-allowed; }
+.success { text-align: center; padding: 10px 0; }
+.ok-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: #cc2222; margin-bottom: 10px; }
+.ok-p { color: #444; font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+.call-btn { display: block; background: #8b1a1a; color: #fff; padding: 14px; border-radius: 8px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 10px; text-align: center; }
+.call-btn:hover { background: #cc2222; }
+.re-btn { background: transparent; border: 2px solid #c8d0e8; color: #555; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; margin-top: 8px; }
+.priv { color: #888; font-size: 11px; margin-top: 10px; line-height: 1.5; }
+.foot { text-align: center; color: #888; font-size: 11px; margin-top: 16px; line-height: 1.6; }
+@media (max-width: 480px) {
+  .addr-input { font-size: 16px; }
+  .finput { font-size: 16px; }
+  .prop-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-logo">GABY <span>ROOFING</span></div>
+    <div class="hdr-sub">Flat Roof Specialist &middot; North Jersey</div>
+  </div>
+  <a class="hdr-phone" href="tel:2016388556">&#128222; 201-638-8556</a>
+</div>
+
+<div class="hero">
+  <h1>Get Your <span>Free</span><br>Roof Estimate</h1>
+  <p>Serving Union City, Jersey City, Hoboken &amp; all of North Jersey &middot; 20+ years &middot; 5&#11088; Google Rating</p>
+</div>
+
+<div class="wrap">
+  <div class="prog" id="prog">
+    <div class="pseg on"></div><div class="pseg"></div><div class="pseg"></div><div class="pseg"></div>
+  </div>
+
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div class="step active" id="s1">
+      <div class="slbl">Step 1 of 4</div>
+      <div class="stitle">What type of property?</div>
+      <div class="shint">We serve homeowners and commercial property owners throughout North Jersey.</div>
+      <div class="tgrid">
+        <button class="tbtn" onclick="pickType('residential',this)">
+          <div class="tbtn-icon">&#127968;</div>
+          <div class="tbtn-name">Residential</div>
+          <div class="tbtn-sub">Home or townhouse</div>
+        </button>
+        <button class="tbtn" onclick="pickType('commercial',this)">
+          <div class="tbtn-icon">&#127970;</div>
+          <div class="tbtn-name">Commercial</div>
+          <div class="tbtn-sub">Business or multi-unit</div>
+        </button>
+      </div>
+      <div class="nav"><div></div><button class="nx" id="n1" disabled onclick="goTo(2)">NEXT &#8594;</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" id="s2">
+      <div class="slbl">Step 2 of 4</div>
+      <div class="stitle">Which service do you need?</div>
+      <div class="shint">Not sure? We will help you choose during your free inspection.</div>
+      <div class="slist" id="slist"></div>
+      <div class="nav">
+        <button class="bk" onclick="goTo(1)">&#8592; Back</button>
+        <button class="nx" id="n2" disabled onclick="goTo(3)">NEXT &#8594;</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" id="s3">
+      <div class="slbl">Step 3 of 4</div>
+      <div class="stitle">Property Address</div>
+      <div class="shint">Start typing your address — Google suggestions will appear. Select yours and we will automatically look up your property details.</div>
+
+      <input class="addr-input" id="addr-input" type="text" placeholder="Start typing your address..."/>
+
+      <div class="info-box info-loading" id="info-loading">
+        <div style="font-size:22px;margin-bottom:8px;">&#9203;</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:#111a3e;">Looking up your property...</div>
+        <div style="font-size:12px;color:#666;margin-top:4px;">Checking property records</div>
+      </div>
+
+      <div class="info-box info-found" id="info-found">
+        <div class="info-lbl">&#9989; Property Found</div>
+        <div class="info-sqft" id="info-sqft-txt"></div>
+        <div id="info-detail-txt"></div>
+        <button class="edit-btn" onclick="showManual()">&#9998; Edit sq footage manually</button>
+      </div>
+
+      <div class="err-box" id="err-box">
+        <div style="font-size:12px;color:#8b4000;font-weight:700;margin-bottom:4px;">&#9888; Property not found automatically</div>
+        <div style="font-size:12px;color:#555;">No problem — enter your sq footage below.</div>
+      </div>
+
+      <div class="man-wrap" id="man-wrap">
+        <label class="man-lbl">Enter Square Footage (roof size)</label>
+        <div class="man-row">
+          <input class="man-input" type="number" id="man-sqft" placeholder="e.g. 1000" oninput="onManual(this.value)"/>
+          <button class="apply-btn" onclick="applyManual()">APPLY</button>
+        </div>
+        <div class="pills">
+          <button class="pill" onclick="setPill(500)">500</button>
+          <button class="pill" onclick="setPill(800)">800</button>
+          <button class="pill" onclick="setPill(1000)">1,000</button>
+          <button class="pill" onclick="setPill(1500)">1,500</button>
+          <button class="pill" onclick="setPill(2000)">2,000</button>
+          <button class="pill" onclick="setPill(3000)">3,000</button>
+        </div>
+        <div style="font-size:12px;color:#888;margin-top:8px;">&#128161; Typical NJ row home roof: 700-1,000 sq ft</div>
+      </div>
+
+      <div class="est-box" id="est-box">
+        <div class="est-lbl">Estimated Cost (High End)</div>
+        <div class="est-price" id="est-price"></div>
+        <div class="est-det" id="est-det"></div>
+      </div>
+
+      <div class="nav">
+        <button class="bk" onclick="goTo(2)">&#8592; Back</button>
+        <button class="nx" id="n3" disabled onclick="goTo(4)">NEXT &#8594;</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step" id="s4">
+      <div class="slbl">Step 4 of 4</div>
+      <div class="stitle">Who Should We Contact?</div>
+      <div class="shint">Damian will personally call you to confirm your estimate and schedule a FREE on-site inspection.</div>
+      <div class="est-box show" id="sum-box" style="margin-bottom:14px;">
+        <div class="est-lbl">Your Estimate (High End)</div>
+        <div class="est-price" id="sum-price"></div>
+        <div class="est-det" id="sum-det"></div>
+      </div>
+      <div class="fields">
+        <div><label class="flbl">Full Name</label><input class="finput" id="f-name" type="text" placeholder="John Smith" oninput="chkForm()"/></div>
+        <div><label class="flbl">Phone Number</label><input class="finput" id="f-phone" type="tel" placeholder="(201) 000-0000" oninput="chkForm()"/></div>
+        <div><label class="flbl">Email Address</label><input class="finput" id="f-email" type="email" placeholder="you@example.com" oninput="chkForm()"/></div>
+        <div><label class="flbl">ZIP Code</label><input class="finput" id="f-zip" type="text" placeholder="07087" oninput="chkForm()"/></div>
+      </div>
+      <p class="priv">&#128274; Your info is private. We will never sell or share your details.</p>
+      <div class="nav">
+        <button class="bk" onclick="goTo(3)">&#8592; Back</button>
+        <button class="nx" id="n4" disabled onclick="doSubmit()">GET MY ESTIMATE</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="step" id="s-ok">
+      <div class="success">
+        <div style="font-size:48px;margin-bottom:12px;">&#127968;</div>
+        <div class="ok-title">We'll Be In Touch!</div>
+        <p class="ok-p">Thanks, <strong id="ok-name"></strong>! Damian will call you at <strong id="ok-phone"></strong> to confirm your estimate and schedule your <strong style="color:#cc2222;">FREE on-site inspection</strong>.</p>
+        <div class="est-box show" style="margin-bottom:16px;text-align:left;">
+          <div class="est-lbl">Your Estimate (High End)</div>
+          <div class="est-price" id="ok-price"></div>
+          <div class="est-det" id="ok-det"></div>
+        </div>
+        <a class="call-btn" href="tel:2016388556">&#128222; CALL: 201-638-8556</a>
+        <p style="font-size:11px;color:#888;margin-top:6px;">Available 24/7 for roof emergencies</p>
+        <button class="re-btn" onclick="doRestart()">Start New Estimate</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="foot">Estimates for budgeting purposes only. Final pricing confirmed after free inspection.<br>NJHIC LICENSE #: 13VH11705800 &copy; 2025 Gaby Roofing</div>
+</div>
+
+<script>
+var SVCS = {
+  residential: [
+    {id:'shingle',   name:'Asphalt Shingles',  icon:'&#127968;', badge:'RESIDENTIAL', desc:'Classic durable shingle roof. Lifetime warranty available.', pps:833},
+    {id:'torchdown', name:'Torch Down Roofing', icon:'&#128293;', badge:'FLAT ROOF',   desc:'Modified bitumen torch-down — gold standard for flat roofs.', pps:750}
+  ],
+  commercial: [
+    {id:'torchdown', name:'Torch Down Roofing', icon:'&#128293;', badge:'COMMERCIAL',  desc:'Durable torch-applied membrane for commercial flat roofs.', pps:750},
+    {id:'silicone',  name:'Silicone Tri-Built', icon:'&#128737;', badge:'PREMIUM',     desc:'Seamless silicone coating — maximum protection.', pps:900},
+    {id:'shingle',   name:'Asphalt Shingles',   icon:'&#127968;', badge:'COMMERCIAL',  desc:'Commercial-grade shingle installation.', pps:833}
+  ]
+};
+
+var ST = {type:null, svcId:null, sqft:null, addr:''};
+var autocomplete = null;
+
+function goTo(n) {
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s'+n).classList.add('active');
+  document.querySelectorAll('.pseg').forEach(function(s,i){s.classList.toggle('on',i<n);});
+  if(n===4) fillSum();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pickType(t,el) {
+  ST.type=t; ST.svcId=null;
+  document.querySelectorAll('.tbtn').forEach(function(b){b.classList.remove('sel');});
+  el.classList.add('sel');
+  document.getElementById('n1').disabled=false;
+  buildSvcs();
+}
+
+function buildSvcs() {
+  var h='';
+  (SVCS[ST.type]||[]).forEach(function(s){
+    h+='<button class="sbtn" id="sb-'+s.id+'" onclick="pickSvc(\''+s.id+'\',this)">';
+    h+='<div class="sbtn-top"><span style="font-size:18px">'+s.icon+'</span><span class="sbtn-name">'+s.name+'</span><span class="sbtn-badge">'+s.badge+'</span></div>';
+    h+='<div class="sbtn-desc">'+s.desc+'</div></button>';
+  });
+  document.getElementById('slist').innerHTML=h;
+}
+
+function pickSvc(id,el) {
+  ST.svcId=id;
+  document.querySelectorAll('.sbtn').forEach(function(b){b.classList.remove('sel');});
+  el.classList.add('sel');
+  document.getElementById('n2').disabled=false;
+}
+
+// Google Maps Places Autocomplete
+function onMapsReady() {
+  var input = document.getElementById('addr-input');
+  autocomplete = new google.maps.places.Autocomplete(input, {
+    componentRestrictions: {country: 'us'},
+    types: ['address'],
+    fields: ['address_components', 'formatted_address']
+  });
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    if (!place || !place.address_components) return;
+
+    // Extract address parts from Google
+    var streetNumber = '';
+    var streetName = '';
+    var city = '';
+    
+    place.address_components.forEach(function(component) {
+      var types = component.types;
+      if (types.indexOf('street_number') >= 0) streetNumber = component.long_name;
+      if (types.indexOf('route') >= 0) streetName = component.long_name;
+      if (types.indexOf('locality') >= 0) city = component.long_name;
+      if (!city && types.indexOf('sublocality') >= 0) city = component.long_name;
+    });
+
+    var address1 = (streetNumber + ' ' + streetName).trim();
+    var address2 = city;
+
+    ST.addr = place.formatted_address;
+    
+    if (address1 && address2) {
+      lookupProperty(address1, address2);
+    }
+  });
+}
+
+async function lookupProperty(address1, address2) {
+  showEl('info-loading'); hideEl('info-found');
+  document.getElementById('man-wrap').style.display='none';
+  document.getElementById('est-box').classList.remove('show');
+  document.getElementById('err-box').style.display='none';
+  document.getElementById('n3').disabled=true;
+  ST.sqft=null;
+
+  try {
+    var url='/.netlify/functions/attom?address1='+encodeURIComponent(address1)+'&address2='+encodeURIComponent(address2);
+    var res=await fetch(url);
+    var data=await res.json();
+    var prop=data&&data.property&&data.property[0];
+    var building=prop&&prop.building;
+    var size=building&&building.size;
+    var summary=building&&building.summary;
+    var construction=building&&building.construction;
+    var rooms=building&&building.rooms;
+
+    var sqft=0;
+    if(size){
+      sqft=size.universalSize||size.livingSize||size.grossSizeAdjusted||size.bldgSize||0;
+    }
+
+    var floors=summary&&(summary.levels||summary.storiesNumber)?parseInt(summary.levels||summary.storiesNumber):1;
+    var type=(prop&&prop.summary&&(prop.summary.proptype||prop.summary.propClass))||'Residential';
+    var yearBuilt=summary&&summary.yearBuilt?parseInt(summary.yearBuilt):null;
+    var roofMaterial=construction&&(construction.roofCover||construction.roofcover)||null;
+    var roofAge=yearBuilt?(new Date().getFullYear()-yearBuilt):null;
+    var assessedValue=prop&&prop.assessment&&prop.assessment.assessed&&prop.assessment.assessed.assdTtlValue||null;
+    var lastSalePrice=prop&&prop.sale&&prop.sale.amount&&prop.sale.amount.saleAmt||null;
+    var bedrooms=rooms&&(rooms.beds||rooms.bedsCount)||null;
+    var bathrooms=rooms&&(rooms.bathsFull||rooms.bathsFullCount)||null;
+    var lotSize=prop&&prop.lot&&prop.lot.lotSize2||null;
+
+    hideEl('info-loading');
+
+    if(sqft>0){
+      var roofSqft=Math.round(sqft/floors);
+      ST.sqft=roofSqft;
+      document.getElementById('info-sqft-txt').textContent=roofSqft.toLocaleString()+' sq ft roof \u00b7 '+Math.ceil(roofSqft/100)+' squares';
+
+      var html='<div class="prop-grid">';
+      if(yearBuilt) html+='<div class="prop-item"><div class="prop-lbl">Year Built</div><div class="prop-val">'+yearBuilt+'</div></div>';
+      if(floors) html+='<div class="prop-item"><div class="prop-lbl">Floors</div><div class="prop-val">'+floors+'</div></div>';
+      if(roofMaterial) html+='<div class="prop-item"><div class="prop-lbl">Roof Material</div><div class="prop-val" style="font-size:14px;">'+roofMaterial+'</div></div>';
+      if(sqft) html+='<div class="prop-item"><div class="prop-lbl">Building Sq Ft</div><div class="prop-val">'+sqft.toLocaleString()+'</div></div>';
+      if(bedrooms) html+='<div class="prop-item"><div class="prop-lbl">Bedrooms</div><div class="prop-val">'+bedrooms+'</div></div>';
+      if(bathrooms) html+='<div class="prop-item"><div class="prop-lbl">Bathrooms</div><div class="prop-val">'+bathrooms+'</div></div>';
+      if(assessedValue) html+='<div class="prop-item"><div class="prop-lbl">Assessed Value</div><div class="prop-val">$'+parseInt(assessedValue).toLocaleString()+'</div></div>';
+      if(lotSize) html+='<div class="prop-item"><div class="prop-lbl">Lot Size</div><div class="prop-val">'+parseInt(lotSize).toLocaleString()+' sqft</div></div>';
+      if(lastSalePrice) html+='<div class="prop-item"><div class="prop-lbl">Last Sale</div><div class="prop-val">$'+parseInt(lastSalePrice).toLocaleString()+'</div></div>';
+      html+='</div>';
+
+      if(roofAge&&roofAge>15){
+        html+='<div class="roof-warn"><div class="roof-warn-title">&#9888; Roof is '+roofAge+' years old!</div><div style="font-size:12px;color:#555;margin-top:2px;">Roofs over 15 years typically need replacement — this could be an urgent job!</div></div>';
+      }
+
+      document.getElementById('info-detail-txt').innerHTML=html;
+      showEl('info-found');
+      calcEst();
+      document.getElementById('n3').disabled=false;
+    } else {
+      document.getElementById('err-box').style.display='block';
+      document.getElementById('man-wrap').style.display='block';
+    }
+  } catch(e) {
+    hideEl('info-loading');
+    document.getElementById('err-box').style.display='block';
+    document.getElementById('man-wrap').style.display='block';
+  }
+}
+
+function showManual(){document.getElementById('man-wrap').style.display='block';}
+function onManual(val){var v=parseInt(val);if(v>0){ST.sqft=v;calcEst();document.getElementById('n3').disabled=false;}else document.getElementById('n3').disabled=true;}
+function applyManual(){onManual(document.getElementById('man-sqft').value);}
+function setPill(val){document.getElementById('man-sqft').value=val;onManual(val);}
+
+function getSvc(){var list=SVCS[ST.type]||[];for(var i=0;i<list.length;i++){if(list[i].id===ST.svcId)return list[i];}return null;}
+
+function calcEst(){
+  if(!ST.sqft||!ST.svcId)return;
+  var svc=getSvc();if(!svc)return;
+  var sq=Math.ceil(ST.sqft/100);
+  var price=Math.round(sq*svc.pps*1.2);
+  document.getElementById('est-price').textContent='$'+price.toLocaleString();
+  document.getElementById('est-det').textContent=sq+' squares \u00b7 '+svc.name+' \u00b7 '+ST.sqft.toLocaleString()+' sq ft';
+  document.getElementById('est-box').classList.add('show');
+}
+
+function fillSum(){
+  document.getElementById('sum-price').textContent=document.getElementById('est-price').textContent||'--';
+  document.getElementById('sum-det').textContent=document.getElementById('est-det').textContent||'--';
+}
+
+function chkForm(){
+  var ok=['f-name','f-phone','f-email','f-zip'].every(function(id){return document.getElementById(id).value.trim();});
+  document.getElementById('n4').disabled=!ok;
+}
+
+function doSubmit(){
+  fillSum();
+  document.getElementById('ok-name').textContent=document.getElementById('f-name').value;
+  document.getElementById('ok-phone').textContent=document.getElementById('f-phone').value;
+  document.getElementById('ok-price').textContent=document.getElementById('sum-price').textContent;
+  document.getElementById('ok-det').textContent=document.getElementById('sum-det').textContent;
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s-ok').classList.add('active');
+  document.getElementById('prog').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function doRestart(){
+  ST={type:null,svcId:null,sqft:null,addr:''};
+  document.getElementById('prog').style.display='flex';
+  document.querySelectorAll('.tbtn').forEach(function(b){b.classList.remove('sel');});
+  document.getElementById('n1').disabled=true;
+  document.getElementById('addr-input').value='';
+  ['f-name','f-phone','f-email','f-zip'].forEach(function(id){document.getElementById(id).value='';});
+  hideEl('info-found'); hideEl('info-loading');
+  document.getElementById('man-wrap').style.display='none';
+  document.getElementById('err-box').style.display='none';
+  document.getElementById('est-box').classList.remove('show');
+  goTo(1);
+}
+
+function showEl(id){document.getElementById(id).style.display='block';}
+function hideEl(id){document.getElementById(id).style.display='none';}
+</script>
+
+<!-- Google Maps Places API for autocomplete -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkBtCAt2LP808QV_MvUApT9XOAR_HFf70&libraries=places&callback=onMapsReady" async defer></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkBtCAt2LP808QV_MvUApT9XOAR_HFf70&libraries=places&callback=initAutoComplete" async defer></script>
+</body>
+</html>
