@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gaby Roofing - Free Estimate</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Barlow', sans-serif; background: #f0f2f8; color: #111; min-height: 100vh; }
+.hdr { background: #111a3e; border-bottom: 4px solid #8b1a1a; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.hdr-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: #fff; line-height: 1; }
+.hdr-logo span { color: #cc2222; }
+.hdr-sub { font-size: 9px; color: #8899bb; letter-spacing: 3px; text-transform: uppercase; margin-top: 2px; }
+.hdr-phone { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; text-decoration: none; }
+.hero { background: #111a3e; text-align: center; padding: 14px 16px 18px; border-bottom: 2px solid #1e2d5a; }
+.hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px,6vw,36px); letter-spacing: 2px; color: #fff; line-height: 1.1; }
+.hero h1 span { color: #cc2222; }
+.hero p { color: #99aacc; font-size: 12px; margin-top: 6px; }
+.wrap { max-width: 600px; margin: 0 auto; padding: 14px 14px 50px; }
+.prog { display: flex; gap: 5px; margin-bottom: 12px; }
+.pseg { flex: 1; height: 5px; border-radius: 3px; background: #ccd; transition: background 0.3s; }
+.pseg.on { background: #cc2222; }
+.card { background: #fff; border: 2px solid #c8d0e8; border-radius: 14px; padding: clamp(14px,4vw,24px); box-shadow: 0 4px 20px rgba(26,36,86,0.1); }
+.step { display: none; }
+.step.active { display: block; }
+.slbl { font-size: 10px; color: #cc2222; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
+.stitle { font-family: 'Bebas Neue', sans-serif; font-size: clamp(20px,5vw,26px); letter-spacing: 1px; color: #111; margin-bottom: 4px; }
+.shint { color: #555; font-size: 13px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #dde2ee; line-height: 1.5; }
+.tgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tbtn { border: 2px solid #c8d0e8; border-radius: 12px; padding: 16px 8px; text-align: center; cursor: pointer; background: #fff; color: #111; width: 100%; transition: all 0.2s; }
+.tbtn.sel { border-color: #cc2222; background: rgba(204,34,34,0.05); }
+.tbtn-icon { font-size: 30px; margin-bottom: 6px; }
+.tbtn-name { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; }
+.tbtn-sub { font-size: 11px; color: #666; margin-top: 3px; }
+.slist { display: flex; flex-direction: column; gap: 8px; }
+.sbtn { border: 2px solid #c8d0e8; border-radius: 10px; padding: 11px 14px; cursor: pointer; background: #fff; color: #111; text-align: left; width: 100%; transition: all 0.2s; }
+.sbtn.sel { border-color: #cc2222; background: rgba(204,34,34,0.05); }
+.sbtn-top { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+.sbtn-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; }
+.sbtn-badge { font-size: 9px; background: #111a3e; color: #fff; padding: 2px 7px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.sbtn-desc { font-size: 12px; color: #555; line-height: 1.4; }
+.addr-wrap { position: relative; margin-bottom: 12px; }
+.addr-input { width: 100%; background: #fff; border: 2px solid #c8d0e8; border-radius: 8px; padding: 13px 14px; color: #111; font-size: 15px; font-family: 'Barlow', sans-serif; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
+.addr-input:focus { border-color: #111a3e; }
+.addr-drop { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 2px solid #111a3e; border-top: none; border-radius: 0 0 8px 8px; z-index: 999; box-shadow: 0 8px 20px rgba(0,0,0,0.15); max-height: 220px; overflow-y: auto; }
+.addr-item { padding: 11px 14px; cursor: pointer; font-size: 14px; color: #111; border-top: 1px solid #eee; display: flex; align-items: center; gap: 8px; }
+.addr-item:first-child { border-top: none; }
+.addr-item:hover { background: #f4f6fb; }
+.info-box { border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: none; }
+.info-loading { background: #f4f6fb; border: 2px solid #c8d0e8; text-align: center; }
+.info-found { background: #f0f4ff; border: 2px solid #111a3e; }
+.info-lbl { font-size: 10px; color: #111a3e; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+.info-sqft { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #111; }
+.info-detail { font-size: 12px; color: #555; margin-top: 3px; }
+.edit-btn { margin-top: 8px; background: transparent; border: 1px solid #c8d0e8; border-radius: 6px; padding: 5px 12px; font-size: 11px; color: #555; cursor: pointer; font-family: 'Barlow', sans-serif; }
+.man-wrap { border-top: 1px solid #dde2ee; padding-top: 12px; margin-top: 8px; }
+.man-lbl { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+.man-row { display: flex; gap: 8px; }
+.man-input { flex: 1; background: #fff; border: 2px solid #c8d0e8; border-radius: 8px; padding: 10px 14px; color: #111; font-size: 15px; font-family: 'Barlow', sans-serif; outline: none; }
+.man-input:focus { border-color: #cc2222; }
+.apply-btn { padding: 10px 16px; background: #111a3e; border: none; border-radius: 8px; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 17px; cursor: pointer; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pill { padding: 5px 12px; border-radius: 20px; border: 1px solid #c8d0e8; background: #fff; color: #333; font-size: 12px; cursor: pointer; font-family: 'Barlow', sans-serif; transition: all 0.2s; }
+.pill:hover { border-color: #111a3e; background: #111a3e; color: #fff; }
+.est-box { background: #f0f4ff; border: 2px solid #111a3e; border-radius: 10px; padding: 14px 16px; margin-top: 12px; display: none; }
+.est-box.show { display: block; }
+.est-lbl { font-size: 10px; color: #111a3e; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
+.est-price { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: #111; }
+.est-det { font-size: 12px; color: #555; margin-top: 3px; }
+.fields { display: flex; flex-direction: column; gap: 10px; }
+.flbl { font-size: 11px; color: #444; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+.finput { width: 100%; background: #fff; border: 2px solid #c8d0e8; border-radius: 8px; padding: 11px 14px; color: #111; font-size: 15px; font-family: 'Barlow', sans-serif; outline: none; }
+.finput:focus { border-color: #cc2222; }
+.nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; gap: 10px; padding-top: 12px; border-top: 1px solid #dde2ee; }
+.bk { padding: 12px 18px; background: transparent; border: 2px solid #c8d0e8; border-radius: 8px; color: #555; font-size: 14px; cursor: pointer; font-weight: 600; font-family: 'Barlow', sans-serif; }
+.nx { flex: 1; max-width: 240px; padding: 13px 20px; background: #8b1a1a; border: none; border-radius: 8px; color: #fff; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; cursor: pointer; }
+.nx:hover { background: #cc2222; }
+.nx:disabled { background: #ccc; color: #888; cursor: not-allowed; }
+.success { text-align: center; padding: 10px 0; }
+.ok-icon { font-size: 48px; margin-bottom: 12px; }
+.ok-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: #cc2222; margin-bottom: 10px; }
+.ok-p { color: #444; font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+.call-btn { display: block; background: #8b1a1a; color: #fff; padding: 14px; border-radius: 8px; text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 10px; text-align: center; }
+.call-btn:hover { background: #cc2222; }
+.re-btn { background: transparent; border: 2px solid #c8d0e8; color: #555; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; margin-top: 8px; }
+.priv { color: #888; font-size: 11px; margin-top: 10px; line-height: 1.5; }
+.foot { text-align: center; color: #888; font-size: 11px; margin-top: 16px; line-height: 1.6; }
+@media (max-width: 480px) {
+  .addr-input { font-size: 16px; }
+  .finput { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-logo">GABY <span>ROOFING</span></div>
+    <div class="hdr-sub">Flat Roof Specialist &middot; North Jersey</div>
+  </div>
+  <a class="hdr-phone" href="tel:2016388556">&#128222; 201-638-8556</a>
+</div>
+
+<div class="hero">
+  <h1>Get Your <span>Free</span><br>Roof Estimate</h1>
+  <p>Serving Union City, Jersey City, Hoboken &amp; all of North Jersey &middot; 20+ years &middot; 5&#11088; Google Rating</p>
+</div>
+
+<div class="wrap">
+  <div class="prog" id="prog">
+    <div class="pseg on"></div>
+    <div class="pseg"></div>
+    <div class="pseg"></div>
+    <div class="pseg"></div>
+  </div>
+
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div class="step active" id="s1">
+      <div class="slbl">Step 1 of 4</div>
+      <div class="stitle">What type of property?</div>
+      <div class="shint">We serve homeowners and commercial property owners throughout North Jersey.</div>
+      <div class="tgrid">
+        <button class="tbtn" onclick="pickType('residential',this)">
+          <div class="tbtn-icon">&#127968;</div>
+          <div class="tbtn-name">Residential</div>
+          <div class="tbtn-sub">Home or townhouse</div>
+        </button>
+        <button class="tbtn" onclick="pickType('commercial',this)">
+          <div class="tbtn-icon">&#127970;</div>
+          <div class="tbtn-name">Commercial</div>
+          <div class="tbtn-sub">Business or multi-unit</div>
+        </button>
+      </div>
+      <div class="nav"><div></div><button class="nx" id="n1" disabled onclick="goTo(2)">NEXT &#8594;</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" id="s2">
+      <div class="slbl">Step 2 of 4</div>
+      <div class="stitle">Which service do you need?</div>
+      <div class="shint">Not sure? We will help you choose during your free inspection.</div>
+      <div class="slist" id="slist"></div>
+      <div class="nav">
+        <button class="bk" onclick="goTo(1)">&#8592; Back</button>
+        <button class="nx" id="n2" disabled onclick="goTo(3)">NEXT &#8594;</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" id="s3">
+      <div class="slbl">Step 3 of 4</div>
+      <div class="stitle">Property Address</div>
+      <div class="shint">Type your address and select it — we will automatically look up your roof size from property records.</div>
+
+      <div class="addr-wrap">
+        <input class="addr-input" id="addr-input" type="text" placeholder="Start typing your NJ address..." autocomplete="off"
+          oninput="onAddrInput(this.value)"
+          onblur="setTimeout(closeDropdown,200)"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();}"/>
+        <div class="addr-drop" id="addr-drop"></div>
+      </div>
+
+      <div class="info-box info-loading" id="info-loading">
+        <div style="font-size:22px;margin-bottom:8px;">&#9203;</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:#111a3e;">Looking up your property...</div>
+        <div style="font-size:12px;color:#666;margin-top:4px;">Checking property records</div>
+      </div>
+
+      <div class="info-box info-found" id="info-found">
+        <div class="info-lbl">&#9989; Property Found</div>
+        <div class="info-sqft" id="info-sqft-txt"></div>
+        <div class="info-detail" id="info-detail-txt"></div>
+        <button class="edit-btn" onclick="showManual()">&#9998; Edit manually</button>
+      </div>
+
+      <div id="err-box" style="display:none;background:#fff0f0;border:2px solid #ffaaaa;border-radius:10px;padding:12px 16px;margin-bottom:10px;">
+        <div style="font-size:11px;color:#cc2222;font-weight:700;margin-bottom:4px;">API Error (show this to your developer):</div>
+        <div id="err-msg" style="font-size:11px;color:#555;word-break:break-all;"></div>
+      </div>
+
+      <div id="man-section" style="display:none;">
+        <div class="man-wrap">
+          <label class="man-lbl">Enter Square Footage (roof size)</label>
+          <div class="man-row">
+            <input class="man-input" type="number" id="man-sqft" placeholder="e.g. 1000" oninput="onManual(this.value)"/>
+            <button class="apply-btn" onclick="applyManual()">APPLY</button>
+          </div>
+          <div class="pills">
+            <button class="pill" onclick="setPill(500)">500</button>
+            <button class="pill" onclick="setPill(800)">800</button>
+            <button class="pill" onclick="setPill(1000)">1,000</button>
+            <button class="pill" onclick="setPill(1500)">1,500</button>
+            <button class="pill" onclick="setPill(2000)">2,000</button>
+            <button class="pill" onclick="setPill(3000)">3,000</button>
+          </div>
+          <div style="font-size:12px;color:#888;margin-top:8px;">&#128161; Typical NJ row home roof: 700-1,000 sq ft</div>
+        </div>
+      </div>
+
+      <div class="est-box" id="est-box">
+        <div class="est-lbl">Estimated Cost (High End)</div>
+        <div class="est-price" id="est-price"></div>
+        <div class="est-det" id="est-det"></div>
+      </div>
+
+      <div class="nav">
+        <button class="bk" onclick="goTo(2)">&#8592; Back</button>
+        <button class="nx" id="n3" disabled onclick="goTo(4)">NEXT &#8594;</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step" id="s4">
+      <div class="slbl">Step 4 of 4</div>
+      <div class="stitle">Who Should We Contact?</div>
+      <div class="shint">Damian will personally call you to confirm your estimate and schedule a FREE on-site inspection.</div>
+      <div class="est-box show" id="sum-box" style="margin-bottom:14px;">
+        <div class="est-lbl">Your Estimate (High End)</div>
+        <div class="est-price" id="sum-price"></div>
+        <div class="est-det" id="sum-det"></div>
+      </div>
+      <div class="fields">
+        <div><label class="flbl">Full Name</label><input class="finput" id="f-name" type="text" placeholder="John Smith" oninput="chkForm()"/></div>
+        <div><label class="flbl">Phone Number</label><input class="finput" id="f-phone" type="tel" placeholder="(201) 000-0000" oninput="chkForm()"/></div>
+        <div><label class="flbl">Email Address</label><input class="finput" id="f-email" type="email" placeholder="you@example.com" oninput="chkForm()"/></div>
+        <div><label class="flbl">ZIP Code</label><input class="finput" id="f-zip" type="text" placeholder="07087" oninput="chkForm()"/></div>
+      </div>
+      <p class="priv">&#128274; Your info is private. We will never sell or share your details.</p>
+      <div class="nav">
+        <button class="bk" onclick="goTo(3)">&#8592; Back</button>
+        <button class="nx" id="n4" disabled onclick="doSubmit()">GET MY ESTIMATE</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="step" id="s-ok">
+      <div class="success">
+        <div class="ok-icon">&#127968;</div>
+        <div class="ok-title">We'll Be In Touch!</div>
+        <p class="ok-p">Thanks, <strong id="ok-name"></strong>! Damian will call you at <strong id="ok-phone"></strong> to confirm your estimate and schedule your <strong style="color:#cc2222;">FREE on-site inspection</strong>.</p>
+        <div class="est-box show" style="margin-bottom:16px;text-align:left;">
+          <div class="est-lbl">Your Estimate (High End)</div>
+          <div class="est-price" id="ok-price"></div>
+          <div class="est-det" id="ok-det"></div>
+        </div>
+        <a class="call-btn" href="tel:2016388556">&#128222; CALL: 201-638-8556</a>
+        <p style="font-size:11px;color:#888;margin-top:6px;">Available 24/7 for roof emergencies</p>
+        <button class="re-btn" onclick="doRestart()">Start New Estimate</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="foot">Estimates for budgeting purposes only. Final pricing confirmed after free inspection.<br>NJHIC LICENSE #: 13VH11705800 &copy; 2025 Gaby Roofing</div>
+</div>
+
+<script>
+var SVCS = {
+  residential: [
+    {id:'shingle',   name:'Asphalt Shingles',  icon:'&#127968;', badge:'RESIDENTIAL', desc:'Classic durable shingle roof. Lifetime warranty available.', pps:833},
+    {id:'torchdown', name:'Torch Down Roofing', icon:'&#128293;', badge:'FLAT ROOF',   desc:'Modified bitumen torch-down — gold standard for flat roofs.', pps:750}
+  ],
+  commercial: [
+    {id:'torchdown', name:'Torch Down Roofing', icon:'&#128293;', badge:'COMMERCIAL',  desc:'Durable torch-applied membrane for commercial flat roofs.', pps:750},
+    {id:'silicone',  name:'Silicone Tri-Built', icon:'&#128737;', badge:'PREMIUM',     desc:'Seamless silicone coating — maximum protection.', pps:900},
+    {id:'shingle',   name:'Asphalt Shingles',   icon:'&#127968;', badge:'COMMERCIAL',  desc:'Commercial-grade shingle installation.', pps:833}
+  ]
+};
+
+var STREETS = ['Bergenline Ave','Kennedy Blvd','Palisade Ave','Summit Ave','Central Ave','Washington St','Broadway','Newark Ave','Tonnelle Ave','Grand Ave','Liberty Ave','Hudson St','Willow Ave','New York Ave','Union Ave','River Rd','Ocean Ave','Bergen Ave','Clinton Ave','Park Ave','Madison St','Jefferson St','Lincoln Ave','45th St','48th St','50th St','52nd St','Paterson Ave','Harrison Ave','Kearny Ave'];
+var CITIES = [{c:'Union City',z:'07087'},{c:'Jersey City',z:'07302'},{c:'Hoboken',z:'07030'},{c:'West New York',z:'07093'},{c:'North Bergen',z:'07047'},{c:'Secaucus',z:'07094'},{c:'Weehawken',z:'07086'},{c:'Bayonne',z:'07002'},{c:'Kearny',z:'07032'},{c:'Newark',z:'07102'}];
+
+var ST = {type:null, svcId:null, sqft:null, addr:''};
+var ATTOM_KEY = '374d07ce2e47e2e558c940a7b6dd09fa';
+
+function goTo(n) {
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s'+n).classList.add('active');
+  document.querySelectorAll('.pseg').forEach(function(s,i){s.classList.toggle('on',i<n);});
+  if(n===4) fillSum();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pickType(t,el) {
+  ST.type=t; ST.svcId=null;
+  document.querySelectorAll('.tbtn').forEach(function(b){b.classList.remove('sel');});
+  el.classList.add('sel');
+  document.getElementById('n1').disabled=false;
+  buildSvcs();
+}
+
+function buildSvcs() {
+  var h='';
+  (SVCS[ST.type]||[]).forEach(function(s){
+    h+='<button class="sbtn" id="sb-'+s.id+'" onclick="pickSvc(\''+s.id+'\',this)">';
+    h+='<div class="sbtn-top"><span style="font-size:18px">'+s.icon+'</span><span class="sbtn-name">'+s.name+'</span><span class="sbtn-badge">'+s.badge+'</span></div>';
+    h+='<div class="sbtn-desc">'+s.desc+'</div></button>';
+  });
+  document.getElementById('slist').innerHTML=h;
+}
+
+function pickSvc(id,el) {
+  ST.svcId=id;
+  document.querySelectorAll('.sbtn').forEach(function(b){b.classList.remove('sel');});
+  el.classList.add('sel');
+  document.getElementById('n2').disabled=false;
+}
+
+// Autocomplete
+function getSuggestions(q) {
+  if(!q||q.length<2) return [];
+  var ql=q.toLowerCase();
+  var num=(q.match(/^(\d+)/)||['','100'])[1];
+  var res=[];
+  for(var i=0;i<STREETS.length;i++){
+    for(var j=0;j<Math.min(5,CITIES.length);j++){
+      var full=num+' '+STREETS[i]+', '+CITIES[j].c+', NJ '+CITIES[j].z;
+      if(STREETS[i].toLowerCase().includes(ql)||CITIES[j].c.toLowerCase().includes(ql)||full.toLowerCase().includes(ql)){
+        res.push(full);
+        if(res.length>=6) return res;
+      }
+    }
+  }
+  return res;
+}
+
+function onAddrInput(val) {
+  ST.addr=val;
+  var s=getSuggestions(val);
+  var dd=document.getElementById('addr-drop');
+  if(s.length>0&&val.length>1){
+    dd.innerHTML=s.map(function(a,i){return '<div class="addr-item" onmousedown="pickAddr(\''+a.replace(/'/g,"\\'")+'\')"><span style="color:#cc2222">&#128205;</span>'+a+'</div>';}).join('');
+    dd.style.display='block';
+  } else {
+    dd.style.display='none';
+  }
+}
+
+function closeDropdown(){document.getElementById('addr-drop').style.display='none';}
+
+function pickAddr(a) {
+  document.getElementById('addr-input').value=a;
+  ST.addr=a;
+  closeDropdown();
+  lookupProperty(a);
+}
+
+async function lookupProperty(a) {
+  showEl('info-loading'); hideEl('info-found');
+  document.getElementById('man-section').style.display='none';
+  document.getElementById('est-box').classList.remove('show');
+  document.getElementById('n3').disabled=true;
+  ST.sqft=null;
+
+  try {
+    var parts=a.split(',');
+    // address1 = street number and name only e.g. "4406 Kennedy Blvd"
+    var address1=parts[0].trim();
+    // address2 = city only e.g. "Union City" - no state, no zip
+    var address2='';
+    if(parts.length>1){
+      // Get just the city - remove state abbreviation and zip
+      address2=parts[1].trim().replace(/\s+(NJ|NY|CT|PA|DE|MD).*$/i,'').trim();
+    }
+    if(!address2) address2='Union City';
+    var url='/.netlify/functions/attom?address1='+encodeURIComponent(address1)+'&address2='+encodeURIComponent(address2);
+    console.log('Calling ATTOM with:', address1, '|', address2);
+    var res=await fetch(url);
+    var data=await res.json();
+    var prop=data&&data.property&&data.property[0];
+    var building=prop&&prop.building;
+    var sqft=(building&&building.size&&(building.size.universalsize||building.size.livingsize||building.size.grosssize))||0;
+    var floors=(building&&building.summary&&building.summary.levels)||1;
+    var type=(prop&&prop.summary&&prop.summary.proptype)||'property';
+
+    hideEl('info-loading');
+    if(sqft>0){
+      var roofSqft=Math.round(sqft/floors);
+      ST.sqft=roofSqft;
+      document.getElementById('info-sqft-txt').textContent=roofSqft.toLocaleString()+' sq ft roof \u00b7 '+Math.ceil(roofSqft/100)+' squares';
+      document.getElementById('info-detail-txt').textContent=type+' \u00b7 '+floors+' floor'+(floors>1?'s':'')+' \u00b7 '+sqft.toLocaleString()+' sq ft total';
+      showEl('info-found');
+      calcEst();
+      document.getElementById('n3').disabled=false;
+    } else {
+      document.getElementById('err-msg').textContent='ATTOM found property but no sqft. Size data: '+JSON.stringify(size)+'  Full: '+JSON.stringify(data).slice(0,300);
+      document.getElementById('err-box').style.display='block';
+      document.getElementById('man-section').style.display='block';
+    }
+  } catch(e) {
+    hideEl('info-loading');
+    document.getElementById('err-msg').textContent='Error: '+e.message;
+    document.getElementById('err-box').style.display='block';
+    document.getElementById('man-section').style.display='block';
+  }
+}
+
+function showManual(){document.getElementById('man-section').style.display='block';}
+
+function onManual(val){
+  var v=parseInt(val);
+  if(v>0){ST.sqft=v;calcEst();document.getElementById('n3').disabled=false;}
+  else document.getElementById('n3').disabled=true;
+}
+
+function applyManual(){onManual(document.getElementById('man-sqft').value);}
+
+function setPill(val){
+  document.getElementById('man-sqft').value=val;
+  onManual(val);
+}
+
+function getSvc(){
+  var list=SVCS[ST.type]||[];
+  for(var i=0;i<list.length;i++){if(list[i].id===ST.svcId)return list[i];}
+  return null;
+}
+
+function calcEst(){
+  if(!ST.sqft||!ST.svcId)return;
+  var svc=getSvc();if(!svc)return;
+  var sq=Math.ceil(ST.sqft/100);
+  var price=Math.round(sq*svc.pps*1.2);
+  document.getElementById('est-price').textContent='$'+price.toLocaleString();
+  document.getElementById('est-det').textContent=sq+' squares \u00b7 '+svc.name+' \u00b7 '+ST.sqft.toLocaleString()+' sq ft';
+  document.getElementById('est-box').classList.add('show');
+}
+
+function fillSum(){
+  document.getElementById('sum-price').textContent=document.getElementById('est-price').textContent||'--';
+  document.getElementById('sum-det').textContent=document.getElementById('est-det').textContent||'--';
+}
+
+function chkForm(){
+  var ok=['f-name','f-phone','f-email','f-zip'].every(function(id){return document.getElementById(id).value.trim();});
+  document.getElementById('n4').disabled=!ok;
+}
+
+function doSubmit(){
+  fillSum();
+  document.getElementById('ok-name').textContent=document.getElementById('f-name').value;
+  document.getElementById('ok-phone').textContent=document.getElementById('f-phone').value;
+  document.getElementById('ok-price').textContent=document.getElementById('sum-price').textContent;
+  document.getElementById('ok-det').textContent=document.getElementById('sum-det').textContent;
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('s-ok').classList.add('active');
+  document.getElementById('prog').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function doRestart(){
+  ST={type:null,svcId:null,sqft:null,addr:''};
+  document.getElementById('prog').style.display='flex';
+  document.querySelectorAll('.tbtn').forEach(function(b){b.classList.remove('sel');});
+  document.getElementById('n1').disabled=true;
+  document.getElementById('addr-input').value='';
+  ['f-name','f-phone','f-email','f-zip'].forEach(function(id){document.getElementById(id).value='';});
+  hideEl('info-found'); hideEl('info-loading');
+  document.getElementById('man-section').style.display='none';
+  document.getElementById('est-box').classList.remove('show');
+  goTo(1);
+}
+
+function showEl(id){document.getElementById(id).style.display='block';}
+function hideEl(id){document.getElementById(id).style.display='none';}
+</script>
+</body>
+</html>
